@@ -1,0 +1,23 @@
+name: Web testleri
+
+on:
+  push:
+    branches: [main, web-3.5-ui]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Kaynağı al
+        uses: actions/checkout@v4
+      - name: Node.js hazırla
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Web testlerini çalıştır
+        run: npm test

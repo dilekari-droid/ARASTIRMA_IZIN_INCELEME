@@ -1,24 +1,30 @@
-# Araştırma Uygulama İzinleri Ön İnceleme Sistemi
+# Araştırma İzin İnceleme — Web
 
-Web tabanlı tez ve araştırma başvurusu ön inceleme uygulamasıdır.
+Tarayıcıda çalışan Araştırma Uygulama İzni Ön İnceleme ve Karar Destek Sistemi.
 
-## Özellikler
+## Sürüm
 
-- PDF, DOCX, TXT ve MD belgelerini birlikte yükleme
-- 30 resmî araştırma uygulama izni kriterini ayrı ayrı değerlendirme
-- 20 maddelik Çocuk Koruma ve Kişisel Veri Risk Analizi
-- Uygun / Uygun Değil / Uzman İncelemesi ayrımı
-- Her kriter için kısa gerekçe
-- 29. kriter için reklam/tanıtım bağlamı kontrolü
-- 30. kriter için başvuru geçmişi yoksa otomatik kesin karar vermeme
-- İnceleme notu ve rapor çıktısı
-
-## Canlı sürüm
-
-https://prime-sinful-postscript--dilekari.replit.app
+Web 3.5.0 — referans tasarıma göre yenilenmiş arayüz.
 
 ## Çalıştırma
 
-Python 3.11+ önerilir. Bağımlılıklar `requirements.txt` dosyasındadır. Uygulama `PORT` ortam değişkenini destekler ve bulut ortamında `0.0.0.0` adresine bağlanır.
+```bash
+python3 -m http.server 8080
+```
 
-> Bu uygulama otomatik ön inceleme yapar. Nihai izin/ret kararı yetkili makamın değerlendirmesine tabidir.
+Ardından `http://localhost:8080` adresini açın.
+
+## Test
+
+```bash
+npm test
+```
+
+Test paketi çekirdek değerlendirme kontrolleri, çocuk koruma kontrolleri ve arayüz sözleşmesini doğrular.
+
+## Önemli
+
+- Uygulama yalnız ön inceleme ve karar desteği sağlar; nihai idari izin/ret kararı üretmez.
+- O-01…O-30 kontrolleri operasyonel ön kontrollerdir; resmî EK-1 madde numarası değildir.
+- CK-01…CK-20 çocuk koruma kontrolleri operasyonel ön kontrollerdir.
+- PDF metin çıkarma motoru ilk kullanımda CDN üzerinden yüklenir. Metin katmanı bulunmayan taranmış PDF'lerde tarayıcının OCR desteği yoksa belge `OKUNAMADI` olarak gösterilir.

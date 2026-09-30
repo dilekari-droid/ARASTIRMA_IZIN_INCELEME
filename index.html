@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0d3f73">
+  <meta name="description" content="Araştırma Uygulama İzni Ön İnceleme ve Karar Destek Sistemi">
+  <link rel="stylesheet" href="styles.css">
+  <title>Araştırma Kontrol Yardımcı</title>
+</head>
+<body>
+<div class="app-shell">
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true"><span>MEB</span></div>
+      <div>
+        <strong>Araştırma Kontrol Yardımcı</strong>
+        <small>Araştırma Uygulama İzni Ön İnceleme ve Karar Destek Sistemi</small>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <span class="connection-dot" aria-hidden="true"></span>
+      <span id="offlineState" class="connection-text">Çevrimiçi</span>
+      <div class="user-chip"><span class="avatar">D</span><span>Değerlendirici</span></div>
+    </div>
+  </header>
+
+  <aside class="sidebar">
+    <nav class="tabs" aria-label="Ana menü">
+      <button data-tab="application" class="active"><span class="nav-icon">⌂</span><span>Başvuru İnceleme</span></button>
+      <button data-tab="documents"><span class="nav-icon">▤</span><span>Belgeler</span></button>
+      <button data-tab="analysis"><span class="nav-icon">✓</span><span>Otomatik İnceleme</span></button>
+      <button data-tab="childProtection"><span class="nav-icon">♢</span><span>Çocuk Koruma</span></button>
+      <button data-tab="criteria"><span class="nav-icon">≡</span><span>30 Ön Kontrol</span></button>
+      <button data-tab="report"><span class="nav-icon">▥</span><span>Rapor</span></button>
+      <button data-tab="archive"><span class="nav-icon">▣</span><span>Arşiv</span></button>
+    </nav>
+    <div class="sidebar-note">
+      <strong>Uzman karar desteği</strong>
+      <span>Sonuçlar nihai idari karar değildir.</span>
+    </div>
+  </aside>
+
+  <main class="workspace">
+    <section id="application" class="panel active">
+      <div class="page-heading">
+        <div><span class="heading-bar"></span><div><h1>Başvuru İnceleme</h1><p>Başvuru bilgilerini girin, belgeleri yükleyin ve otomatik ön incelemeyi çalıştırın.</p></div></div>
+        <span class="version-badge">Web 3.5</span>
+      </div>
+
+      <div class="stepper" aria-label="İnceleme aşamaları">
+        <div class="step active"><span>1</span><strong>Başvuru Bilgileri</strong></div>
+        <div class="step"><span>2</span><strong>Belgeleri Yükle</strong></div>
+        <div class="step"><span>3</span><strong>Otomatik İnceleme</strong></div>
+        <div class="step"><span>4</span><strong>Rapor Oluştur</strong></div>
+      </div>
+
+      <div class="content-card">
+        <div class="card-title"><span></span><h2>Başvuru Bilgileri</h2></div>
+        <div class="notice compact"><strong>Bilgilendirme:</strong> Bu araç uzman ön incelemesini destekler. 29.09.2026 tarihli sunuma göre başvurudaki bilgi ve belgelerin tamamı ile ilgili kriterler ayrıca değerlendirilmelidir.</div>
+        <div class="grid two form-grid">
+          <label>Araştırma başlığı<input id="title" placeholder="Araştırmanın tam başlığını yazın"></label>
+          <label>Araştırmacı<input id="researcher" placeholder="Ad soyad"></label>
+          <label>Başvuru şekli<select id="applicationType"><option></option><option>Zorunlu eğitime devam eden öğrenci</option><option>Akademisyen / Öğrenci</option><option>Kamu kurum/kuruluşu veya STK temsilcisi</option><option>Bağımsız araştırmacı</option><option>Millî eğitim müdürlüğüne bağlı birim temsilcisi</option></select></label>
+          <label>Araştırma türü<select id="researchType"><option></option><option>Araştırma</option><option>Proje</option><option>Lisans bitirme çalışması</option><option>Yüksek lisans tezi</option><option>Doktora tezi</option><option>Makale</option><option>Bildiri</option><option>Öğrenci araştırması/projesi</option></select></label>
+          <label class="span2">Araştırmanın amacı<textarea id="purpose" rows="4" placeholder="Araştırmanın amacını açıklayın"></textarea></label>
+          <label>İl sayısı<input id="provinceCount" type="number" min="1" max="81" value="1"></label>
+          <label>Uygulama yapılacak iller<input id="provinces" placeholder="Örn. Ankara, Konya"></label>
+          <label>Okul/kurumlar<input id="institutions"></label>
+          <label>Örneklem/çalışma grubu<input id="sampleGroup"></label>
+          <label>Model/desen<input id="researchDesign"></label>
+          <label>Veri toplama yöntemi<input id="dataCollectionMethod"></label>
+          <label>Veri analiz yöntemi<input id="dataAnalysisMethod"></label>
+          <label>Uygulama süresi<input id="duration"></label>
+          <label>13+ il bilimsel gerekçesi<input id="scientificProvinceRationale"></label>
+          <label>Örneklem büyüklüğü<input id="sampleSize"></label>
+          <label class="span2">Uygulama kapsamı<input id="scopeExplanation"></label>
+        </div>
+      </div>
+
+      <div class="content-card">
+        <div class="card-title"><span></span><h2>Koşullu Bilgiler</h2></div>
+        <div class="checks modern-checks">
+          <label><input type="checkbox" id="hasMinors"><span>Reşit olmayan katılımcı</span></label>
+          <label><input type="checkbox" id="isStudentResearcher"><span>Araştırmacı öğrenci</span></label>
+          <label><input type="checkbox" id="isTubitakProject"><span>Araştırma niteliği TÜBİTAK projesi</span></label>
+          <label><input type="checkbox" id="hasAudioRecording"><span>Ses kaydı</span></label>
+          <label><input type="checkbox" id="hasVideoRecording"><span>Görüntü kaydı</span></label>
+          <label><input type="checkbox" id="hasForeignLanguageDocument"><span>Yabancı dilde belge</span></label>
+          <label><input type="checkbox" id="usesPreviouslyDevelopedTool"><span>Daha önce geliştirilmiş araç</span></label>
+          <label><input type="checkbox" id="institutionsKnown"><span>Okul/kurumlar belli</span></label>
+          <label class="wide"><input type="checkbox" id="hasPendingDuplicateApplication"><span>Aynı araştırma için sonuçlanmamış önceki başvuru var</span></label>
+        </div>
+        <label class="standalone-label">Önceki başvuru numarası (varsa)<input id="previousApplicationNumber" placeholder="Örn. MEB.TT...."></label>
+        <div class="actions right-actions"><button id="saveDraft">Taslağı Kaydet</button><button id="runFromApplication" class="primary">Otomatik Ön Kontrolü Başlat</button></div>
+      </div>
+    </section>
+
+    <section id="documents" class="panel">
+      <div class="page-heading"><div><span class="heading-bar"></span><div><h1>Belgeler</h1><p>Başvuru belgelerini yükleyin ve belge türü sınıflandırmasını kontrol edin.</p></div></div></div>
+      <div class="content-card">
+        <div class="document-toolbar">
+          <label>Belge kategorisi<select id="docCategory"></select></label>
+          <label class="file-picker"><input id="fileInput" type="file" multiple accept=".pdf,.docx,.txt,.md,.csv,.jpg,.jpeg,.png,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/*"><span>＋ Dosya Yükle</span></label>
+        </div>
+        <div class="notice compact"><strong>Belge işleme:</strong> PDF/DOCX/TXT dosyaları tarayıcı içinde işlenir. Otomatik belge türü önerisi kesin değildir; uzman gerektiğinde kategoriyi değiştirebilir. Metin çıkarılamayan belgeler açıkça “OKUNAMADI” olarak gösterilir.</div>
+        <div id="docCards" class="document-grid"></div>
+        <div class="tablewrap legacy-doc-table" hidden><table><tbody id="docRows"></tbody></table></div>
+      </div>
+    </section>
+
+    <section id="analysis" class="panel">
+      <div class="page-heading"><div><span class="heading-bar"></span><div><h1>Otomatik Ön İnceleme</h1><p>Belge ve başvuru bilgileri üzerinden operasyonel kontrol sonuçlarını birlikte inceleyin.</p></div></div><button id="runAnalysis" class="primary">İncelemeyi Yenile</button></div>
+      <div class="review-layout">
+        <div class="review-main">
+          <div class="stepper compact-stepper">
+            <div class="step done"><span>✓</span><strong>Belgeler</strong></div>
+            <div class="step active"><span>2</span><strong>Otomatik İnceleme</strong></div>
+            <div class="step"><span>3</span><strong>Sonuç</strong></div>
+            <div class="step"><span>4</span><strong>Rapor</strong></div>
+          </div>
+
+          <div class="content-card">
+            <div class="card-title"><span></span><h2>Sunumda Metni Doğrulanan Kriterler</h2></div>
+            <div class="notice compact"><strong>29. madde reklam ön taraması:</strong> Başlık ve katılımcının göreceği veri toplama araçlarında ürün/marka/kurum/organizasyon ve reklam-tanıtım sinyalleri aranır. Bir adın geçmesi tek başına nihai karar oluşturmaz; ilgili bulgu uzman incelemesine taşınır.</div>
+            <div id="presentationResults" class="cards result-cards"></div>
+          </div>
+
+          <div class="content-card">
+            <div class="card-title"><span></span><h2>İçerikten Çıkarılan Bilgiler</h2></div>
+            <div id="contentSignals" class="signal-grid"></div>
+          </div>
+
+          <div class="content-card">
+            <div class="card-title"><span></span><h2>Temel Kontroller</h2></div>
+            <div id="analysisResults" class="cards result-cards"></div>
+          </div>
+        </div>
+
+        <aside class="review-side">
+          <div id="overallResultCard" class="summary-card summary-neutral">
+            <span class="summary-icon">i</span>
+            <div><small>Genel Ön İnceleme</small><strong id="overallResultTitle">Henüz tamamlanmadı</strong><p id="overallResultText">Başvuru bilgileri ve belgeler kontrol edildiğinde özet burada gösterilir.</p></div>
+          </div>
+          <div class="side-card">
+            <div class="side-title danger-title"><span>!</span><h3>Dikkat Gerektiren Hususlar</h3></div>
+            <div id="attentionList" class="side-list"><p class="empty-state">Henüz değerlendirme sonucu yok.</p></div>
+          </div>
+          <div class="side-card">
+            <div class="side-title"><span>✓</span><h3>Olumlu Bulgular</h3></div>
+            <div id="positiveList" class="side-list"><p class="empty-state">Henüz değerlendirme sonucu yok.</p></div>
+          </div>
+          <div class="side-card report-shortcut">
+            <div class="side-title"><span>▥</span><h3>Rapor</h3></div>
+            <button type="button" data-go-tab="report" class="outline-primary">Resmî Raporu Görüntüle</button>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="childProtection" class="panel">
+      <div class="page-heading"><div><span class="heading-bar"></span><div><h1>Çocuk Koruma ve Kişisel Veri</h1><p>CK-01…CK-20 operasyonel ön kontrolleri çocuk katılımcılar yönünden inceler.</p></div></div></div>
+      <div class="content-card">
+        <div class="notice compact"><strong>Kaynak sınırı:</strong> CK kontrolleri resmî EK-1 kriteri değildir. Mevcut MEB değerlendirme kriterlerini destekleyen operasyonel ön kontrollerdir; nihai hukukî veya idari karar üretmez.</div>
+        <div id="childProtectionSummary" class="criteria-summary" aria-live="polite"></div>
+        <div id="childProtectionResults" class="criteria-table-wrap"></div>
+      </div>
+    </section>
+
+    <section id="criteria" class="panel">
+      <div class="page-heading"><div><span class="heading-bar"></span><div><h1>30 Operasyonel Ön Kontrol</h1><p>Başvuru ve belge içeriğinden üretilen O-01…O-30 sonuçlarını inceleyin.</p></div></div></div>
+      <div class="content-card">
+        <div class="notice compact"><strong>Önemli:</strong> O-01…O-30 numaraları resmî EK-1 madde numarası değildir. Sunumda açık metni görülen 1, 12, 27, 28 ve 29. maddeler ayrıca otomatik inceleme bölümünde gösterilir.</div>
+        <div id="criteriaSummary" class="criteria-summary" aria-live="polite"></div>
+        <div id="criteriaResults" class="criteria-table-wrap"></div>
+      </div>
+    </section>
+
+    <section id="report" class="panel">
+      <div class="page-heading"><div><span class="heading-bar"></span><div><h1>Ön İnceleme Raporu</h1><p>Tespit–değerlendirme–sonuç düzeninde oluşturulan resmî rapor görünümü.</p></div></div></div>
+      <div class="content-card report-actions-card">
+        <div class="actions"><button id="refreshReport">Raporu Güncelle</button><button id="copyReport">Raporu Kopyala</button><button id="downloadReport" class="primary">TXT İndir</button></div>
+        <div class="notice compact"><strong>Rapor ilkesi:</strong> Ham belge metinlerindeki telefon, e-posta ve benzeri kişisel veriler raporda gereksiz yere tekrarlanmaz. Teknik kanıtlar ilgili kontrol ekranlarında incelenebilir.</div>
+        <div id="reportPreview" class="official-report-preview" aria-live="polite"></div>
+        <details class="report-raw-details"><summary>Metin çıktısını göster</summary><textarea id="reportText" class="report" readonly></textarea></details>
+      </div>
+    </section>
+
+    <section id="archive" class="panel">
+      <div class="page-heading"><div><span class="heading-bar"></span><div><h1>Arşiv</h1><p>Bu tarayıcıda saklanan ön inceleme kayıtlarını yönetin.</p></div></div></div>
+      <div class="content-card">
+        <div class="actions"><button id="archiveCurrent" class="primary">Mevcut Başvuruyu Arşivle</button><button id="clearArchive" class="danger">Arşivi Temizle</button></div>
+        <div id="archiveList" class="cards"></div>
+      </div>
+    </section>
+  </main>
+</div>
+<script type="module" src="app.js"></script>
+</body>
+</html>
