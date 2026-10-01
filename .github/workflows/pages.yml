@@ -1,0 +1,55 @@
+name: Web Final - GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'web-final/**'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Kaynağı al
+        uses: actions/checkout@v4
+      - name: Node.js hazırla
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: JavaScript sözdizimini kontrol et
+        run: node --check web-final/app.js
+      - name: 30 kriter ve 20 risk tanımlarını kontrol et
+        run: |
+          grep -q "const CRITERIA=\[" web-final/app.js
+          grep -q "const RISK_NAMES=\[" web-final/app.js
+          grep -q "Kriter Değerlendirme Sonuçları (30 Kriter)" web-final/index.html
+      - name: Pages'i hazırla
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+      - name: Site paketini yükle
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: web-final
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: test-and-build
+    steps:
+      - name: GitHub Pages'e yayınla
+        id: deployment
+        uses: actions/deploy-pages@v4
