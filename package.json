@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "node build-standalone.mjs",
-    "test": "node --check core-loader.js && node --check app.js && node --check build-standalone.mjs && node ci-tests.mjs && npm run build",
+    "test": "node --check core-loader.js && node --check app.js && node --check build-standalone.mjs && npm run build && node ci-tests.mjs",
     "serve": "python3 -m http.server 8080 -d ."
   }
 }
