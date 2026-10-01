@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0a4374">
+<title>Araştırma Uygulama İzinleri Ön İnceleme</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<section id="loginScreen" class="login-screen">
+  <form id="loginForm" class="login-card">
+    <div class="login-mark">Aİ</div>
+    <h1>Araştırma Uygulama İzinleri</h1>
+    <p>Başvuru ve Değerlendirme Ön İnceleme Programı</p>
+    <div id="loginError" class="login-error" hidden>Parola hatalı.</div>
+    <label>Program Parolası<input id="passwordInput" type="password" autocomplete="current-password" required autofocus></label>
+    <button type="submit">GİRİŞ YAP</button>
+    <small>Bu araç otomatik ön inceleme yapar; resmî nihai karar sistemi değildir.</small>
+  </form>
+</section>
+
+<div id="appShell" class="app-shell" hidden>
+  <header class="topbar">
+    <div class="brand"><div class="brand-mark">Aİ</div><div><strong>Araştırma Uygulama İzinleri</strong><span>Başvuru ve Değerlendirme Ön İnceleme Sistemi</span></div></div>
+    <div class="top-actions"><span class="badge">30 Kriter + 20 Risk Kontrolü</span><button id="logoutBtn" class="logout-btn">Çıkış</button></div>
+  </header>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="nav active">⌂ <span>Başvuru İnceleme</span></div>
+      <div class="nav">▤ <span>Belgeler</span></div>
+      <div class="nav">✓ <span>Otomatik İnceleme</span></div>
+      <div class="nav">♢ <span>Çocuk Koruma</span></div>
+      <div class="nav">▥ <span>Rapor</span></div>
+      <div class="side-note">Belgeler tarayıcı içinde işlenir; bu statik web sürümünde sunucuya yüklenmez.</div>
+    </aside>
+    <main class="content">
+      <section class="card hero">
+        <div><h1>Başvuru İnceleme</h1><p>Tez ve araştırma başvurularını 30 resmî kriter ve 20 ayrı çocuk/kişisel veri ön kontrolü üzerinden inceleyin.</p></div>
+        <div class="steps"><div class="step on"><b>1</b><span>Belgeleri Yükle</span></div><div class="line"></div><div class="step"><b>2</b><span>Otomatik İnceleme</span></div><div class="line"></div><div class="step"><b>3</b><span>Sonucu Görüntüle</span></div><div class="line"></div><div class="step"><b>4</b><span>Rapor Oluştur</span></div></div>
+      </section>
+
+      <section class="card">
+        <h2>Başvuru Bilgileri</h2>
+        <div class="formgrid">
+          <label>Araştırma Başlığı<input id="research_title"></label>
+          <label>Başvuru Türü<select id="application_type"><option>Akademisyen / Öğrenci</option><option>Bağımsız Araştırmacı</option><option>Kamu Kurumu Temsilcisi</option><option>STK Temsilcisi</option><option>Millî Eğitim Birim Temsilcisi</option><option>Zorunlu Eğitime Devam Eden Öğrenci</option></select></label>
+          <label>Araştırmacı Öğrenci mi?<select id="is_student"><option value="yes">Evet</option><option value="no">Hayır</option></select></label>
+          <label>Araştırma Niteliği<input id="research_nature" placeholder="Yüksek lisans tezi, proje, 2204-A..."></label>
+          <label>Başvurunun Yapıldığı Ülke<input id="country" value="Türkiye"></label>
+          <label>Unvan<input id="title"></label>
+          <label>Meslek<input id="profession"></label>
+          <label>Çalıştığı Kurum<input id="institution"></label>
+          <label>Bağlı Olduğu Kurum<input id="parent_institution"></label>
+          <label>Adres<input id="address"></label>
+          <label>Telefon<input id="phone"></label>
+          <label>E-posta<input id="email" type="email"></label>
+          <label>Katılımcı Grubu<input id="participant_group" placeholder="Öğrenci, öğretmen, veli..."></label>
+          <label>Uygulama İlleri<input id="cities" placeholder="Ankara, Konya"></label>
+          <label>Uygulama Birimi<input id="unit" placeholder="Ortaokul, il MEM..."></label>
+          <label>Sistemde Beyan Edilen Araçlar<input id="declared_tools" placeholder="Ölçek A; Görüşme Formu B"></label>
+          <label>Yabancı Dilde Belge<select id="foreign_docs"><option value="no">Hayır</option><option value="yes">Evet</option></select></label>
+          <label>Ses/Görüntü Kaydı<select id="av_record"><option value="no">Hayır</option><option value="yes">Evet</option></select></label>
+          <label>Reşit Olmayan Katılımcı<select id="minors"><option value="yes">Evet</option><option value="no">Hayır</option></select></label>
+          <label>Veri Toplama Aracı Kaynağı<select id="tool_origin"><option value="unknown">Bilinmiyor</option><option value="self">Araştırmacı geliştirdi</option><option value="previous">Daha önce kullanılmış araç</option></select></label>
+          <label>Mükerrer Başvuru<select id="duplicate"><option value="unknown">Bilinmiyor / Sistem kontrolü gerekli</option><option value="no">Mükerrer başvuru yok</option><option value="yes">Mükerrer başvuru var</option></select></label>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="sectionhead"><h2>Belgeler</h2><button id="pickBtn" class="primary">＋ Dosya Yükle</button><input id="fileInput" type="file" multiple accept=".pdf,.docx,.txt,.md,.csv" hidden></div>
+        <div id="drop" class="drop"><b>Belgeleri buraya sürükleyin</b><span>PDF, DOCX, TXT, MD ve CSV • Birden fazla belge birlikte incelenebilir</span></div>
+        <div id="fileCards" class="filecards"></div>
+        <div class="actions"><button id="analyzeBtn" class="analyze" disabled>İNCELE</button><button id="clearBtn" class="ghost">Temizle</button><span id="progress" class="progress"></span></div>
+      </section>
+
+      <section class="card">
+        <div class="sectionhead"><h2>Kriter Değerlendirme Sonuçları (30 Kriter)</h2><button id="expandAll" class="linkbtn">Tümünü Genişlet</button></div>
+        <div class="tablewrap"><table><thead><tr><th>No</th><th>Kriter</th><th>Durum</th><th>Açıklama</th></tr></thead><tbody id="criteriaBody"></tbody></table></div>
+      </section>
+
+      <section class="card"><h2>Çocuk Koruma ve Kişisel Veri Risk Analizi</h2><p class="muted">Bu 20 kontrol, 30 resmî kriteri değiştirmez; ayrı operasyonel ön kontroldür.</p><div id="riskGrid" class="riskgrid"></div></section>
+      <section class="card"><h2>İnceleme Notu</h2><div id="note" class="noteBox">Belgeler incelendikten sonra otomatik ön inceleme notu burada oluşacaktır.</div></section>
+    </main>
+
+    <aside class="rightcol">
+      <section class="card"><h2>Genel Sonuç</h2><div id="overall" class="overall"><div class="big">…</div><div><h3>İNCELEME BEKLİYOR</h3><p>Belgeleri yükleyip İNCELE düğmesine basın.</p></div></div><div id="counters" class="counters"></div></section>
+      <section class="card"><h2>Uygun Olmayan / İncelenecek Kriterler</h2><div id="issues" class="muted">Henüz sonuç yok.</div></section>
+      <section class="card"><h2>Öne Çıkan Uygunluklar</h2><div id="strengths" class="muted">Henüz sonuç yok.</div></section>
+      <section class="card"><h2>Rapor</h2><button id="printBtn" class="reportbtn">Detaylı Raporu Yazdır / PDF</button><button id="saveBtn" class="reportbtn">Sonucu Kaydet (JSON)</button></section>
+    </aside>
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mammoth@1.8.0/mammoth.browser.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
