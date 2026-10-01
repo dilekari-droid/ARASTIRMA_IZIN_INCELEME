@@ -1,0 +1,12 @@
+import {readFile,mkdir,writeFile} from "node:fs/promises";
+import {gunzipSync} from "node:zlib";
+const read=n=>readFile(new URL(`./${n}`,import.meta.url),"utf8");
+const [index,css,p1,p2,p3]=await Promise.all([read("index.html"),read("styles.css"),read("app.part01.js"),read("app.part02.js"),read("app.part03.js")]);
+const b64=(await Promise.all([1,2,3,4].map(i=>read(`core.bundle.part0${i}.b64`)))).join("");
+const core=gunzipSync(Buffer.from(b64,"base64")).toString("utf8");
+let app=p1+p2+p3;
+app=app.replace(/^import\s+\{[^\n]+\}\s+from\s+'\.\/core-loader\.js';\s*\n?/,"");
+const standalone=index.replace('<link rel="stylesheet" href="styles.css">',`<style>${css}</style>`).replace('<script type="module" src="app.js"></script>',`<script type="module">${core}\n${app}</script>`);
+await mkdir(new URL("./dist/",import.meta.url),{recursive:true});
+await writeFile(new URL("./dist/BASLAT.html",import.meta.url),standalone,"utf8");
+console.log("BUILD_OK",standalone.length);
