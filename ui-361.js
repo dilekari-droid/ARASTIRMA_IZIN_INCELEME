@@ -1,4 +1,4 @@
-// Web 3.6.1 — yalnız arayüz uyum katmanı; değerlendirme motoruna dokunmaz.
+// Web 3.6.2 — arayüz uyum katmanı ve güvenli başlangıç değerleri; değerlendirme motoru core içinde çalışır.
 (function(){
   const q=(s,r=document)=>r.querySelector(s);
   const brand=q('.brand');
@@ -8,7 +8,16 @@
     if(small) small.textContent='Araştırma Uygulama İzinleri Başvuru ve Değerlendirme Sistemi';
   }
   document.title='Araştırma Uygulama İzinleri Başvuru ve Değerlendirme Sistemi';
-  const version=q('.version-badge'); if(version) version.textContent='Web 3.6.1';
+  const version=q('.version-badge'); if(version) version.textContent='Web 3.6.2';
+
+  // Eski HTML'deki 1 değeri gerçek kullanıcı girdisi değildir. Açılışta kaldırılır;
+  // kullanıcı sonradan 1 yazarsa normal biçimde gerçek başvuru verisi olarak kullanılır.
+  const provinceCount=document.getElementById('provinceCount');
+  if(provinceCount && provinceCount.value==='1'){
+    provinceCount.value='';
+    provinceCount.placeholder='Belgeden de tespit edilebilir';
+  }
+
   const topActions=q('.topbar-actions');
   if(topActions && !q('.ui361-notify',topActions)){
     const n=document.createElement('div'); n.className='ui361-notify'; n.setAttribute('aria-label','Bildirimler'); n.innerHTML='<span>♧</span><b>3</b>'; topActions.prepend(n);
