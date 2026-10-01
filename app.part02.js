@@ -78,7 +78,13 @@ function runAnalysis(){
   return latest;
 }
 function renderContentSignals(s){const rows=[['Okunabilir belge',String(s.readableDocumentCount)],['Amaç',s.purpose],['Problem',s.problem],['Araştırma sorusu / hipotez',s.questions],['Model / desen',s.design],['Örneklem / çalışma grubu',s.sample],['Örneklem büyüklüğü',s.sampleSize],['Belgede tespit edilen il sayısı',s.provinceCount==null?'':String(s.provinceCount)],['Veri toplama',s.dataCollection],['Veri analiz yöntemi',s.analysis],['Uygulama süresi',s.duration]]; $('contentSignals').innerHTML=rows.map(([k,v])=>`<div class="signal-row"><strong>${escapeHtml(k)}</strong><span>${escapeHtml(v||'Tespit edilemedi')}</span></div>`).join('');}
-function renderCards(id,items){$(id).innerHTML=items.map(x=>`<article class="card"><div class="status" data-status="${x.status}">${x.status===Status.UNVERIFIED?'DOĞRULANMADI':x.status}</div><h3>${escapeHtml(x.title)}</h3><p>${escapeHtml(x.finding)}</p>${x.evidence?`<p class="evidence"><strong>Kanıt:</strong> ${escapeHtml(x.evidence)}</p>`:''}</article>`).join('')}
+function renderCards(id,items){
+  if(id==='analysisResults'){
+    $(id).innerHTML=`<div class="dashboard-table-wrap"><table class="dashboard-table"><thead><tr><th>No</th><th>Kriter / kontrol</th><th>Durum</th><th>Açıklama</th></tr></thead><tbody>${items.map((x,i)=>`<tr><td>${i+1}</td><td>${escapeHtml(x.title)}</td><td><span class="status" data-status="${escapeHtml(x.status)}">${escapeHtml(x.status===Status.UNVERIFIED?'DOĞRULANMADI':x.status)}</span></td><td>${escapeHtml(x.finding)}${x.evidence?`<div class="table-evidence">${escapeHtml(x.evidence)}</div>`:''}</td></tr>`).join('')}</tbody></table></div>`;
+    return;
+  }
+  $(id).innerHTML=items.map(x=>`<article class="card"><div class="status" data-status="${x.status}">${x.status===Status.UNVERIFIED?'DOĞRULANMADI':x.status}</div><h3>${escapeHtml(x.title)}</h3><p>${escapeHtml(x.finding)}</p>${x.evidence?`<p class="evidence"><strong>Kanıt:</strong> ${escapeHtml(x.evidence)}</p>`:''}</article>`).join('')
+}
 
 function tableStatusLabel(status){return status===Status.UNVERIFIED?'DOĞRULANMADI':status}
 function renderChildProtection(items){

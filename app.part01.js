@@ -42,7 +42,7 @@ function init(){
   document.querySelectorAll('[data-go-tab]').forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.goTab)));
   $('fileInput').addEventListener('change', e=>handleFiles([...e.target.files]));
   $('runAnalysis').addEventListener('click', runAnalysis);
-  $('runFromApplication').addEventListener('click',()=>{runAnalysis();showTab('analysis')});
+  $('runFromApplication').addEventListener('click',()=>{runAnalysis();document.querySelector('.criteria-preview')?.scrollIntoView({behavior:'smooth',block:'start'});});
   $('saveDraft').addEventListener('click', saveDraft);
   $('refreshReport').addEventListener('click', refreshReport);
   $('downloadReport').addEventListener('click', downloadReport);
