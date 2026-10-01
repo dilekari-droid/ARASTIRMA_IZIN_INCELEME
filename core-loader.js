@@ -45,6 +45,7 @@ export const evaluateInternal=core.evaluateInternal;
 export const presentationCriteriaChecks=core.presentationCriteriaChecks;
 export const operationalCriteria=core.operationalCriteria;
 export const extractContentSignals=core.extractContentSignals;
+export const extractApplicationSignals=core.extractApplicationSignals;
 export const childDataProtectionChecks=core.childDataProtectionChecks;
 export const riskAssessment=core.riskAssessment;
 export const buildReport=core.buildReport;
