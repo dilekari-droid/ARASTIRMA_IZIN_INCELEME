@@ -6,7 +6,7 @@ const b64=(await Promise.all([1,2,3,4].map(i=>read(`core.bundle.part0${i}.b64`))
 const core=gunzipSync(Buffer.from(b64,"base64")).toString("utf8");
 let app=p1+p2+p3;
 app=app.replace(/^import\s+\{[^\n]+\}\s+from\s+'\.\/core-loader\.js';\s*\n?/,"");
-const standalone=index.replace('<link rel="stylesheet" href="styles.css">',`<style>${css}</style>`).replace('<script type="module" src="app.js"></script>',`<script type="module">${core}\n${app}</script>`);
+const standalone=index.replace('<link rel="stylesheet" href="styles.css">',()=>`<style>${css}</style>`).replace('<script type="module" src="app.js"></script>',()=>`<script type="module">${core}\n${app}</script>`);
 await mkdir(new URL("./dist/",import.meta.url),{recursive:true});
 await writeFile(new URL("./dist/BASLAT.html",import.meta.url),standalone,"utf8");
 console.log("BUILD_OK",standalone.length);
