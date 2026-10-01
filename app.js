@@ -1,3 +1,9 @@
+const uiCss = document.createElement('link');
+uiCss.rel = 'stylesheet';
+uiCss.href = new URL('./ui-361.css', import.meta.url).href;
+document.head.appendChild(uiCss);
+await import(new URL('./ui-361.js', import.meta.url));
+
 const PARTS = ['app.part01.js', 'app.part02.js', 'app.part03.js'];
 const chunks = await Promise.all(PARTS.map(async name => {
   const response = await fetch(new URL(name, import.meta.url));
