@@ -1,0 +1,47 @@
+name: Web Final Paketle
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'web-final/**'
+      - '.github/workflows/package-web.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Kaynağı al
+        uses: actions/checkout@v4
+      - name: Node.js hazırla
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: JavaScript sözdizimini kontrol et
+        run: node --check web-final/app.js
+      - name: 30 kriter ve 20 risk kontrolünü doğrula
+        run: |
+          grep -q "Kriter Değerlendirme Sonuçları (30 Kriter)" web-final/index.html
+          grep -q "const CRITERIA=\[" web-final/app.js
+          grep -q "const RISK_NAMES=\[" web-final/app.js
+          grep -q "PASSWORD_HASH" web-final/app.js
+      - name: Paket bilgisini ekle
+        run: |
+          cat > web-final/PAKET_BILGISI.txt <<'EOF'
+          ARAŞTIRMA UYGULAMA İZİNLERİ ÖN İNCELEME WEB PROGRAMI
+          Parola: 12345+
+          Kullanım: Bir statik web sunucusunun köküne bu klasörün içeriğini yükleyin.
+          Dosyalar tarayıcı içinde işlenir. PDF ve DOCX okuma kütüphaneleri CDN üzerinden yüklenir.
+          30 resmî kriter + 20 ayrı çocuk/kişisel veri operasyonel ön kontrolü içerir.
+          EOF
+      - name: Web paketini yükle
+        uses: actions/upload-artifact@v4
+        with:
+          name: ARASTIRMA_IZIN_INCELEME_WEB_FINAL
+          path: web-final/
+          if-no-files-found: error
+          compression-level: 9
