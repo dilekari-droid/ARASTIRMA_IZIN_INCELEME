@@ -1,11 +1,11 @@
 {
   "name": "arastirma-izin-inceleme-web",
-  "version": "3.6.0",
+  "version": "3.6.1",
   "private": true,
   "type": "module",
   "scripts": {
     "build": "node build-standalone.mjs",
-    "test": "node --check core-loader.js && node --check app.js && node --check build-standalone.mjs && npm run build && node ci-tests.mjs",
+    "test": "node --check core-loader.js && node --check app.js && node --check ui-361.js && node --check build-standalone.mjs && npm run build && node ci-tests.mjs",
     "serve": "python3 -m http.server 8080 -d ."
   }
 }
