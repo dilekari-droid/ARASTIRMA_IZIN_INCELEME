@@ -14,17 +14,21 @@ const doc=(name,category,text)=>({name,category,text,extractionStatus:'SUCCESS'}
 
 const index=await readFile(new URL('./index.html',import.meta.url),'utf8');
 const styles=await readFile(new URL('./styles.css',import.meta.url),'utf8');
+const standalone=await readFile(new URL('./dist/BASLAT.html',import.meta.url),'utf8');
 const appSource=(await Promise.all(['app.part01.js','app.part02.js','app.part03.js'].map(n=>readFile(new URL(n,import.meta.url),'utf8')))).join('');
 const tmp=new URL('./._ci-app-check.mjs',import.meta.url);
 await writeFile(tmp,appSource);
 try{execFileSync(process.execPath,['--check',fileURLToPath(tmp)],{stdio:'pipe'});}finally{await unlink(tmp).catch(()=>{});}
 
 test('referans arayüz: üst bar + sol menü',()=>{assert.match(index,/class="topbar"/);assert.match(index,/class="sidebar"/);});
-test('referans arayüz: çift sütun inceleme',()=>assert.match(index,/class="review-layout"/));
+test('referans arayüz: merkez + sağ sonuç sütunu',()=>{assert.match(index,/class="dashboard-shell"/);assert.match(index,/class="dashboard-side"/);});
+test('başvuru ekranında belge ve kriter alanı aynı sayfada',()=>{assert.match(index,/>Belgeler</);assert.match(index,/Kriter Değerlendirme Sonuçları/);});
 test('nihai kabul-ret ifadesi yok',()=>{assert.doesNotMatch(index,/BAŞVURU KABUL EDİLEBİLİR/i);assert.doesNotMatch(index,/BAŞVURU REDDEDİLMELİ/i);});
 test('web-only: servis worker yok',()=>assert.doesNotMatch(appSource,/serviceWorker\.register/));
 test('uygulama birleşik kaynak sözdizimi geçerli',()=>assert.ok(appSource.length>10000));
-test('responsive stil mevcut',()=>assert.match(styles,/@media\(max-width:820px\)/));
+test('responsive stil mevcut',()=>assert.match(styles,/@media\(max-width:860px\)/));
+test('tek dosyalı BASLAT üretildi',()=>{assert.match(standalone,/<style>/);assert.match(standalone,/<script type="module">/);assert.doesNotMatch(standalone,/src="app\.js"/);assert.doesNotMatch(standalone,/href="styles\.css"/);});
+test('BASLAT içinde yeni dashboard var',()=>{assert.match(standalone,/Web 3\.6/);assert.match(standalone,/dashboard-shell/);assert.match(standalone,/Dikkat Gerektiren Hususlar/);});
 
 test('veli onam dosyası tanınır',()=>assert.equal(inferDocumentCategory('veli_onam.pdf','').category,'PARENTAL_CONSENT'));
 test('Facebook/WhatsApp reklam taramasında yakalanır',()=>{
